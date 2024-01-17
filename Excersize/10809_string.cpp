@@ -1,27 +1,38 @@
-// #include <bits/stdc++.h>
-// using namespace std;
+#include <bits/stdc++.h>
+using namespace std;
 
-// string s;
-// //a: 아스키 코드 97
-// //z: 아스키 코드 122
+string s;
+// a: 아스키 코드 97
+// z: 아스키 코드 122
 
-// int asc[101];
-// int ret[26];
+int ret[26];
 
-// int main(){
+int main()
+{
+    cin >> s;
 
-//     cin>> s;    
+    for (int i = 0; i < 26; i++)
+    {
+        ret[i] = -1;
+    }
 
-//     for(int i : s) asc[i] = s[i];
 
-//     for(int i : ret) {
+    int i = 0;
 
-//         if(asc.find(97이상 122이하의 정수)){
+    for (char c : s)
+    {
+        if (c < 123 && c > 96)
+        {
+            if(ret[c-97]==-1){
+                ret[c - 97] = i;
+            }
             
-//             ret[i] = 인덱스
-//         }else{
-//             ret[i] = -1;
-//         }
-//     }
+        }
+        i++;
+    }
 
-// }
+    for (int i = 0; i<26; i++)
+    {
+        cout << ret[i] << " ";
+    }
+}

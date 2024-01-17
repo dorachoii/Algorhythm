@@ -39,7 +39,7 @@ int main(){
     getline(cin,t);
 
     vector<string> v;
-    v = split2(&t," ");
+    v = split2(t," ");
 
     cout << v.size();
 }
