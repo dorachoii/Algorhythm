@@ -23,14 +23,14 @@ int main()
         while (pos != string::npos)
         {
             cnt++;
-            // s.erase(pos,a[i].length());     // 두번째 매개변수는 지울 개수 의미
-            //  지워버리면 붙어서 새로운 게 만들어질 수 있음
+            // a[i]을 찾은 위치부터 해당 문자열의 길이만큼 '0'으로 변경
             for (int j = pos; j < pos + a[i].length(); j++)
             {
                 s[j] = '0';
+                
             }
 
-            pos = s.find(a[i]);
+            pos = s.find(a[i], pos + 1); // 다음 위치부터 다시 검색
         }
     }
 
@@ -38,7 +38,8 @@ int main()
 
     while (pos != string::npos)
     {
-        s.erase(pos);
+        s.erase(pos, 1);   // pos 위치의 문자를 1개 삭제
+        pos = s.find('0'); // 다음 '0' 찾기
     }
 
     cnt += s.length(); //*문자열 길이, 배열의 사이즈 등

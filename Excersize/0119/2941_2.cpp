@@ -13,9 +13,12 @@ int main(){
 
     for(int i = 0; i < 8; i++){
         size_t pos = s.find(a[i]);
-        poss[i] = pos;
+       
 
-        if(pos == string::npos) poss[i] = -1;
+        if(pos == string::npos) {poss[i] = -1;}
+        else{
+             poss[i] = pos;
+        }
     }
 
     for(int i = 0; i < 8; i++){

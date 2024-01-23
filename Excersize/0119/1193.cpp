@@ -11,7 +11,7 @@ int main()
     a.push_back(1);
 
 
-    for(int n = 1; n < s; n++){
+    for(int n = 1; n <= s; n++){
         for (int i = 1; i <= 2 * n + 1; i++)
         {
             a.push_back(i);
