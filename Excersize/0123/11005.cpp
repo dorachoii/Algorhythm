@@ -22,15 +22,12 @@ int main(){
         num += K;
         N /= B;
     }
-    if (N > 9)
-    {
-        K = 'A' + k - 10;
-    }
-    else
-    {
+
+    if(N>9){
+        K = 'A' + N -10;
+    }else{
         K = to_string(k);
     }
-
     num += K;
 
     reverse(num.begin(),num.end());
