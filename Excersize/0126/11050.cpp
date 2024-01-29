@@ -14,6 +14,4 @@ int main(){
 
     int ret = factorial(N) / (factorial(K)* factorial(N-K));
     cout << ret;
-
-
 }

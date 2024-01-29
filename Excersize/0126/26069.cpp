@@ -2,6 +2,8 @@
 using namespace std;
 
 int digit(int n){
+    int k = n-3;
+
     
 }
 
