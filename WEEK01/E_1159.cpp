@@ -19,7 +19,7 @@ int main()
     {
         if (a[i] >= 5)
         {
-            ret += (char)(i + 'a');
+            ret += i + 'a';
         }
     }
 
