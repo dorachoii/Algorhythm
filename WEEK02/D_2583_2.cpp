@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//x,y방향이 헷갈림
+
 const int max_m = 101;
 int m, n, k, paper[max_m][max_m], cnt, x, y;
 int a, b, c, d;
