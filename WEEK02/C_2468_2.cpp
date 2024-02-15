@@ -3,7 +3,7 @@ using namespace std;
 
 //dfs로 방향벡터 탐색
 const int MAX = 101;
-int n, a[MAX][MAX],b[MAX][MAX], minn = 100, maxx = 0,k,maxCnt = 0;
+int n, a[MAX][MAX],b[MAX][MAX], minn = 2, maxx,k,maxCnt = 1;
 bool visited[MAX][MAX];
 
 int dx[] = {-1,1,0,0};

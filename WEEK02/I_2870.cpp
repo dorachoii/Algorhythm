@@ -4,6 +4,7 @@ using namespace std;
 // 입력 숫자니? 문자니?
 // 002 는 2와 같아.
 // 비내림차순 정렬
+// segment fault 발생 두번째 예제에서
 
 // 양쪽 다 비교해야함.
 
@@ -61,8 +62,7 @@ int main()
                             q.pop();
                         }
 
-                        ret.push_back(stoi(num)); // 01을 1로 처리하는 로직이 필요, 231233도 숫자로 입력안되는 거 같은데
-
+                        ret.push_back(stoi(num)); 
                         num = "";
                     }
 

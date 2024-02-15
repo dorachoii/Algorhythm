@@ -1,162 +1,62 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int max_n = 64;
-int n, a[max_n][max_n];
 
-string ret;
+int n;
 
-void quadTree(int n){
+void go(,int size){
 
-    if(n == 1) return;
-    n/=2;
+    int half = size / 2;
+    vector<vector<int>> a1;
+    vector<vector<int>> a2;
+    vector<vector<int>> a3;
+    vector<vector<int>> a4;
+    bool flag = 0;
 
-    int x[n][n];
-    int y[n][n];
-    int z[n][n];
-    int w[n][n];
-    
-    //4분할
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j<n; j++){
-            x[i][j] = a[i][j];
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            if (tmp != v[i][j])
+            {
+                flag = 1;
+            }
         }
     }
 
-    for(int i = 0; i < n; i++){
-        for(int j = n; j < n*2; j++){
-            y[i][j] = a[i][j];
+    if (flag)
+    { // 안같으면
+        for (int i = 0; i < half; i++)
+        {
+            vector<int> temp1;
+            vector<int> temp2;
+            vector<int> temp3;
+            vector<int> temp4;
+
+            for (int j = 0; j < half; j++)
+            {
+                temp1.push_back(v[i][j]);
+                temp2.push_back(v[i][j + half]);
+                temp3.push_back(v[i + half][j]);
+                temp4.push_back(v[i + half][j + half]);
+            }
+            a1.push_back(temp1);
+            a2.push_back(temp2);
+            a3.push_back(temp3);
+            a4.push_back(temp4);
         }
+
+        cout << "(";
+        go(a1, half);
+        go(a2, half);
+        go(a3, half);
+        go(a4, half);
+        cout << ")";
+        return;
     }
-
-    for(int i = n; i < n *2; i++){
-        for(int j = 0; j < n ; j++){
-            z[i][j] = a[i][j];
-        }
-    }
-
-    for(int i = n; i < n * 2; i++){
-        for(int j = 0; j < n; j++){
-            w[i][j] = a[i][j];
-        }
-    }
-
-    
-
-    // 검사
-    
-   
-        ret += "(";
-
-        int cnt = 0;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                if(x[i][j]){
-                    cnt++;
-                }
-            }
-        }
-
-        if(cnt == n*n){
-            ret += "1";
-
-        }else if(cnt == 0){
-            ret += "0";
-
-        }else{
-            quadTree(n/2);
-        }
-
-        cnt = 0;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                if (y[i][j])
-                {
-                    cnt++;
-                }
-            }
-        }
-
-        if (cnt == n * n)
-        {
-            ret += "1";
-        }
-        else if (cnt == 0)
-        {
-            ret += "0";
-        }
-        else
-        {
-            quadTree(n / 2);
-        }
-
-        cnt = 0;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                if (z[i][j])
-                {
-                    cnt++;
-                }
-            }
-        }
-
-        if (cnt == n * n)
-        {
-            ret += "1";
-        }
-        else if (cnt == 0)
-        {
-            ret += "0";
-        }
-        else
-        {
-            quadTree(n / 2);
-        }
-
-        cnt = 0;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                if (w[i][j])
-                {
-                    cnt++;
-                }
-            }
-        }
-
-        if (cnt == n * n)
-        {
-            ret += "1";
-        }
-        else if (cnt == 0)
-        {
-            ret += "0";
-        }
-        else
-        {
-            quadTree(n / 2);
-        }
-
-        ret += ")";  
 }
 
 int main(){
     cin >> n;
-
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
-            cin >> a[i][j];
-        }
-    }
-
-    quadTree(n);
-
-    cout << ret;
+    
 
 }
