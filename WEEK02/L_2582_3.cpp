@@ -6,6 +6,7 @@ string s;
 
 // <시간,팀번호>
 map<int, int> mp;
+map<int, int> //팀 시간 저장
 
 int main()
 {
