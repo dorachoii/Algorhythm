@@ -10,15 +10,19 @@ vector<int> adj[10004];
 bool visited[10004];
 
 int hack(int node){
-    int cnt= 0;
+    int cnt= 0; //위치 수정
     visited[node] = true;
 
     for(int i = 0; i < adj[node].size(); i++){
         if(visited[adj[node][i]]) continue;
-        hack(adj[node][i]);
-        cnt++;
+        cnt += hack(adj[node][i]);
     }
-    return cnt;
+    return cnt +1;
+}
+
+bool compare(const pair<int, int> &a, const pair<int, int> &b)
+{
+    return a.second > b.second; // 두 번째 요소인 second를 기준으로 내림차순 정렬
 }
 
 int main(){
@@ -29,18 +33,16 @@ int main(){
         adj[u].push_back(v);
     }
 
-    int prevv = -1;
-
-    for(int i = 0; i < n; i++){
+    for(int i = 1; i <= n; i++){
 
         if(!visited[i]){
-            ret.push_back({hack(n), i});
+            ret.push_back({hack(i), i});
         }
     }
 
-    sort(ret.begin(), ret.end());
+    sort(ret.begin(), ret.end(), compare);
 
-    int i = 1;
+    int i = 0;
     while(ret[0].first == ret[i].first){
         computerN.push_back(ret[i].second);
         i++;
