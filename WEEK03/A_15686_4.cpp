@@ -11,55 +11,8 @@ int cnt;
 int dy[] = {-1, 0, 1, 0};
 int dx[] = {0, 1, 0, -1};
 
-int bfs(int y, int x, int yy, int xx)
-{
-    // 방문배열 초기화
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = 1; j <= n; j++)
-        {
-            visited[i][j] = 0;
-        }
-    }
+//이거 돌릴 필요 없이 좌표 빼서 더하면 되네..
 
-    int cnt = 0;
-    int mn = 2500;
-    queue<pair<int, int>> q;
-
-    visited[y][x] = 1;
-    q.push({y, x});
-
-    while (q.size())
-    {
-        tie(y, x) = q.front();
-        q.pop();
-
-        // cout << "현재 탐색하는 정점은 " <<x <<","<<y <<'\n';
-        // cout << "시작점에서 여기까지 " << visited[y][x] <<"만큼의 거리\n";
-
-        if(y == yy && x == xx){
-            return visited[y][x] -1;
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            int ny = y + dy[i];
-            int nx = x + dx[i];
-
-            if (ny < 1 || ny >n || nx < 1 || nx >n || b[ny][nx] > 0)
-                continue;
-
-            if (visited[ny][nx])
-                continue;
-
-            visited[ny][nx] = visited[y][x] + 1;
-
-            q.push({ny, nx});
-        }
-    }
-
-    return -1;
-}
 
 // m 개 이하까지만  뽑아주기
 void pick(int idx, bool bb)
@@ -89,7 +42,7 @@ void pick(int idx, bool bb)
 
         if (cCnt <= m)
         {
-            cout << cnt << "번째 조합이 " << cCnt << "개의 치킨집으로 m보다 작아서 가능\n";
+            //cout << cnt << "번째 조합이 " << cCnt << "개의 치킨집으로 m보다 작아서 가능\n";
             // 선별된 것 마다, 도시의 치킨 거리 구할 것.
             cityCD = 0;
             
@@ -97,15 +50,20 @@ void pick(int idx, bool bb)
             for (int i = 0; i < hPos.size(); i++)
             {
                 int minCD = 2500;
-                cout << i << "번째 집에서 bfs를 실행합니다\n";
+                //cout << i << "번째 집에서 치킨 집까지 거리 재기\n";
+
                 for (int j = 0; j < cPos.size(); j++)
                 {
-                    CD  = bfs(hPos[i].first, hPos[i].second, cPos[j].first, cPos[j].second);
+                    CD  = abs(hPos[i].first - cPos[j].first) + abs(hPos[i].second - cPos[j].second);
                     minCD = min(CD, minCD);
+                   
                 }
+
                 cityCD += minCD;
+                //cout << i <<"번째 치킨 도시 거리는 "<<cityCD<<'\n'; 
             }
 
+            //cout << cnt << "번째 조합의 치킨 도시 거리는 " << minCityCD <<'\n';
             minCityCD = min(minCityCD, cityCD);
         }
 
@@ -140,21 +98,47 @@ int main()
         }
     }
 
-    for (int i = 0; i < cPos.size(); i++)
-    {
-        pick(i, true);
+    if(m > 1){
 
-        // cout << "치킨집 리셋\n";
-
-        for (int i = 1; i <= n; i++)
+        for (int i = 0; i < cPos.size(); i++)
         {
-            for (int j = 1; j <= n; j++)
+            pick(i, true);
+
+            // cout << "치킨집 리셋\n";
+
+            for (int i = 1; i <= n; i++)
             {
-                if (b[i][j] == 2)
-                    b[i][j] = 0;
+                for (int j = 1; j <= n; j++)
+                {
+                    if (b[i][j] == 2)
+                        b[i][j] = 0;
+                }
             }
         }
+    }else if(m==1){
+
+        
+
+        for (int i = 0; i < cPos.size(); i++)
+        {
+            int minCD = 2500;
+            //cout << i << "번째 치킨집을 골랐을 때\n";
+            cityCD = 0;
+            for (int j = 0; j < hPos.size(); j++)
+            {
+
+                CD = abs(hPos[j].first - cPos[i].first) + abs(hPos[j].second - cPos[i].second);
+                //minCD = min(CD, minCD);
+                cityCD += CD;
+            }
+
+            //cout <<" 치킨 도시 거리는 " << cityCD << '\n';
+
+            minCityCD = min(minCityCD, cityCD);
+        }
+        //cout << cnt << "번째 조합의 치킨 도시 거리는 " << minCityCD << '\n';       
     }
 
+   
     cout << minCityCD;
 }

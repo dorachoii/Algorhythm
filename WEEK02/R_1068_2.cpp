@@ -1,49 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n,p,k;
-vector<int> adj[51];
+// 인접 리스트를 만드는데 양방향이 아니라, 자기 자식들만 담아
+// 지우고 남은 것 인접리스트가 0인 것들과 + 루트노드 1개?
 
-bool dead[51];
+int n, a[52], k, ret;
+vector<int> adj[52];
 
-void cut(int a){
+bool b[52];
 
-    dead[a] = true;
+void cut(int node)
+{
+    b[node] = false;
 
-    if (!adj[a].empty())
+    for (int s : adj[node])
     {
-        for(int j : adj[a]){
-
-            if(dead[j]) continue;
-            cut(j);
-        }
+        cut(s);
     }
 }
 
-int main(){
+int main()
+{
+    // 입력 받기
     cin >> n;
-
-    for(int i = 0; i < n; i++){
-        cin >> p;
-        if(p == -1) continue;
-        adj[p].push_back(i);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+        if (a[i] != -1)
+            adj[a[i]].push_back(i);
+        b[i] = true;
     }
 
     cin >> k;
-    cut(k);
 
-    int cnt = 0;
-    for(int i = 0; i < n; i++){
+    if (a[k] == -1)
+    {
+        ret = 0;
+    }
+    // 노드 삭제
+    else
+    {
+        cut(k);
 
-        if(dead[i]) continue;
-        if(!adj[i].empty()) continue;
-
-        cnt++;
+        for (int i = 0; i < n; i++)
+        {
+            if (b[i] == false)
+                continue;
+            if (adj[i].size() == 0)
+                ret++;
+            else
+            {
+                bool flag = 1;
+                for (int j : adj[i])
+                {
+                    if (b[j] == true)
+                        flag = 0;
+                }
+                if (flag)
+                    ret++;
+            }
+        }
     }
 
-    cout << cnt;
-
-
-
+    cout << ret;
 }
-// 테스트케이스 통과
