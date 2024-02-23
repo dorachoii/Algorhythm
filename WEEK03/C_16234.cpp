@@ -5,6 +5,7 @@ int n, l,r, ppl, a[51][51];
 bool visited[2501];
 
 map<pair<int,int>, int> node;
+map<int, pair<int,int>> Pos;
 
 vector<vector<int>> adj;
 
@@ -23,8 +24,9 @@ void connect(int x, int y){
         if(nx<0 || nx>=n || ny < 0 || ny>=n) continue;
 
         // 2차원 좌표를 1개의 노드로 묶는 방법
+        // 이걸 모르겠는데..
         if (abs(a[nx][ny] - a[x][y]) >= l && abs(a[nx][ny] - a[x][y]) <= r){
-            adj[node[{x,y}]].push_back({node[{nx,ny}]});
+            adj[node[{x,y}]].push_back({node[{nx,ny}]});          
         }
     }
 }
@@ -34,6 +36,14 @@ void uniteSUM(int x, int y){
 
     for(int i = 0; i < adj[node[{x,y}]]; i++){
         
+        for(int j = 0; j < 4; j++){
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if(nx<0 || nx >=n || ny <0 || ny>=n) continue;
+
+            [Pos[i].first,Pos[i].second]
+        }
     }
 
 }
@@ -54,6 +64,7 @@ int main(){
             // 0 1
             // 2 3
             node[{i,j}] = idx;
+            pos[idx] = {i,j};
             idx++;
         }
     }
