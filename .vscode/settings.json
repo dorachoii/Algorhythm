@@ -87,7 +87,8 @@
         "type_traits": "cpp",
         "algorithm": "cpp",
         "filesystem": "cpp",
-        "execution": "cpp"
+        "execution": "cpp",
+        "print": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

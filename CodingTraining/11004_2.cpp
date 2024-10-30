@@ -1,0 +1,1 @@
+// #include <algorithm> 내장함수 sort : quick sort 알고리즘을 바탕으로 만들어짐 , O(n * logn)

@@ -4,45 +4,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string s;
-int cnt;
-bool a[1000004];
+// string s;
+// int cnt;
+// bool a[1000004];
 
-int main()
-{
-    cin >> s;
+// int main()
+// {
+//     // cin >> s;
 
-    while (!s.empty())
-    {
-        // 0~ 9까지 돌아가면서
-        for (int i = 0; i <= 9; i++)
-        {
-            vector<int> v;
-            for (int j = 0; j < s.length(); j++)
-            {
-                if (s[j] == i)
-                {
-                    s[j] = 'a';
-                }
-            }
+//     // while (!s.empty())
+//     // {
+//     //     // 0~ 9까지 돌아가면서
+//     //     for (int i = 0; i <= 9; i++)
+//     //     {
+//     //         vector<int> v;
+//     //         for (int j = 0; j < s.length(); j++)
+//     //         {
+//     //             if (s[j] == i)
+//     //             {
+//     //                 s[j] = 'a';
+//     //             }
+//     //         }
 
-            cnt++;
-        }
-    }
+//     //         cnt++;
+//     //     }
+//     // }
 
-    // 6에다가 2번 카운트해주는 식으로!
+//     // // 6에다가 2번 카운트해주는 식으로!
     
-    // for (int i = 0; i <= 9; i++)
-    // {
-    //     for (int j = 0; j < s.length(); j++)
-    //     {
-    //         if (s[j] == i)
-    //         {
-    //             a[j] = false;
-    //         }
-    //     }
-    //     cnt++;
-    // }
+//     // // for (int i = 0; i <= 9; i++)
+//     // // {
+//     // //     for (int j = 0; j < s.length(); j++)
+//     // //     {
+//     // //         if (s[j] == i)
+//     // //         {
+//     // //             a[j] = false;
+//     // //         }
+//     // //     }
+//     // //     cnt++;
+//     // // }
 
-    cout << cnt;
+//     // cout << cnt;
+
+
+// }
+
+int main() {
+    string a = "love is";
+    a += " pain!";
+    a.pop_back();
+    cout << a << " : "<< a.size() << "\n";
 }
