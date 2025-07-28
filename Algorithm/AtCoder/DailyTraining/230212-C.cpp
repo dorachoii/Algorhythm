@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
-#include <queue>
+#include <deque>
+#include <tuple>
+#include <set>
 
 using namespace std;
 
@@ -8,104 +10,87 @@ int dx[4] = {0, 0, -1, 1};
 int dy[4] = {-1, 1, 0, 0};
 
 int r, c, n;
-vector<vector<char>> arr;
-vector<vector<bool>> visited;
+vector<string> board;
 
-void stamp(int y, int x)
-{
-    for (int i = y; i < y + n; i++)
-    {
-        for (int j = x; j < x + n; j++)
-        {
-            if (i < 0 || i >= r || j < 0 || j >= c)
-                continue;
-            arr[i][j] = '.';
+bool inRange(int y, int x) {
+    return 0 <= y && y < r && 0 <= x && x < c;
+}
+
+void stamp(int sy, int sx, vector<string>& b) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            int ny = sy + i;
+            int nx = sx + j;
+            if (inRange(ny, nx)) {
+                b[ny][nx] = '.';
+            }
         }
     }
 }
 
-int bfs(int startY, int startX, int endY, int endX)
-{
-    queue<pair<int, int>> q;
-    visited.assign(r, vector<bool>(c, false)); // 방문 초기화 꼭 해주기
-    visited[startY][startX] = true;
-    q.push({startY, startX});
-    int count = 0;
+int bfs(int sy, int sx, int gy, int gx) {
+    deque<tuple<int, int, int, vector<string>>> dq;
+    set<tuple<int, int, vector<string>>> visited;
 
-    while (!q.empty())
-    {
-        auto [y, x] = q.front();
-        q.pop();
+    dq.push_front({sy, sx, 0, board});
+    visited.insert({sy, sx, board});
 
-        if (y == endY && x == endX)
-            return count;
+    while (!dq.empty()) {
+        auto [y, x, cost, curBoard] = dq.front();
+        dq.pop_front();
 
-        bool canMove = false;
-        for (int d = 0; d < 4; d++)
-        {
+        if (y == gy && x == gx) return cost;
+
+        for (int d = 0; d < 4; d++) {
             int ny = y + dy[d];
             int nx = x + dx[d];
+            if (!inRange(ny, nx)) continue;
 
-            if (ny < 0 || ny >= r || nx < 0 || nx >= c)
-                continue;
-            if (arr[ny][nx] == '#' || visited[ny][nx])
-                continue;
+            // 그냥 이동
+            if (curBoard[ny][nx] == '.') {
+                if (visited.count({ny, nx, curBoard}) == 0) {
+                    visited.insert({ny, nx, curBoard});
+                    dq.push_front({ny, nx, cost, curBoard});
+                }
+            }
+            // 벽이면 스탬프 후보 위치 탐색
+            else if (curBoard[ny][nx] == '#') {
+                for (int sy = ny - n + 1; sy <= ny; sy++) {
+                    for (int sx = nx - n + 1; sx <= nx; sx++) {
+                        if (!inRange(sy, sx) || !inRange(sy + n - 1, sx + n - 1)) continue;
 
-            canMove = true;
-            visited[ny][nx] = true;
-            q.push({ny, nx});
-        }
+                        vector<string> newBoard = curBoard;
+                        stamp(sy, sx, newBoard);
 
-        if (!canMove)
-        {
-            // 상하좌우 중 막힌 곳 찾아서 찍는게 좋지만 일단 위쪽으로 고정
-            for (int i = 0; i < 4; i++)
-            {
-                int ny = y + dy[i];
-                int nx = x + dx[i];
-
-                if (ny < 0 || ny >= r || nx < 0 || nx >= c)
-                    continue;
-
-                if (arr[ny][nx] == '#')
-                {
-                    count++;
-                    stamp(ny, nx);
-
-                    visited[ny][nx] = true;
-                    q.push({ny, nx});
-                    break;
+                        if (newBoard[ny][nx] == '.') {
+                            if (visited.count({ny, nx, newBoard}) == 0) {
+                                visited.insert({ny, nx, newBoard});
+                                dq.push_back({ny, nx, cost + 1, newBoard});
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
-    return count;
+    return -1;
 }
 
-int main()
-{
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int sy, sx, gy, gx;
     cin >> r >> c >> n;
+    cin >> sy >> sx >> gy >> gx;
+    sy--, sx--, gy--, gx--;
 
-    pair<int, int> start, end;
-    cin >> start.first >> start.second >> end.first >> end.second;
-
-    arr = vector<vector<char>>(r, vector<char>(c));
-    for (int i = 0; i < r; i++)
-    {
-        string s;
-        cin >> s;
-        for (int j = 0; j < c; j++)
-        {
-            arr[i][j] = s[j];
-        }
+    board.resize(r);
+    for (int i = 0; i < r; i++) {
+        cin >> board[i];
     }
 
-    cout << bfs(start.first - 1, start.second - 1, end.first - 1, end.second - 1) << "\n";
-
+    cout << bfs(sy, sx, gy, gx) << "\n";
     return 0;
 }
-
